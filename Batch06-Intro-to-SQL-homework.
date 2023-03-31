@@ -1,0 +1,192 @@
+I was assigned a SQL homework including...
+
+Senario -- Restaurant Owners
+To do list  -- Create 5 Tables
+            -- Create ER diagram 1x Fact, 4x Dimension
+            -- search google, how to add foreign key
+            -- write SQL 3-5 queries analyze data
+            -- 1x subquery/with 
+I created this code in Replit. You can run the code in the link belows.
+[https://replit.com/@RungchatAmnuay/SQLhomeworkbatch6#main.sql]
+
+## Let's start.
+
+CREATE TABLE Orders (
+      Order_id          INT UNIQUE,
+      Branch_id         INT,       
+      Staff_id          INT,               
+      Menu_id           INT,
+      Categories_id     INT,               
+      Order_date        DATE,
+      Unit              INT,
+      Unit_price        REAL,
+      Total_price       REAL,
+  PRIMARY KEY (Order_id),
+  CONSTRAINT FK_BranchOrder FOREIGN KEY (Branch_id)
+  REFERENCES Branch(Branch_id),
+  CONSTRAINT FK_StaffsOder FOREIGN KEY (Staff_id)
+  REFERENCES Staffs(Staff_id),
+  CONSTRAINT FK_MenuOrder FOREIGN KEY (Menu_id)
+  REFERENCES Menu(Menu_id),
+  CONSTRAINT FK_CategoriesOrder FOREIGN KEY (Categories_id)
+  REFERENCES Categories(Categories_id)
+);
+
+INSERT INTO Orders VALUES 
+  (1, 2, 2, 2, 1, 2020-01-21, 1, 10, 10),
+  (2, 1, 1, 1, 1, 2020-01-21, 2, 10, 20),
+  (3, 1, 3, 8, 2, 2020-01-21, 1, 12, 12),
+  (4, 2, 2, 11, 2, 2020-01-22, 1, 50, 50),
+  (5, 2, 2, 1, 1, 2020-01-22, 1, 8, 8),
+  (6, 2, 2, 16, 3, 2020-01-22, 1, 8, 8),
+  (7, 1, 4, 4, 1, 2020-01-23, 2, 9, 18),
+  (8, 3, 4, 9, 2, 2020-01-23, 1, 29, 29),
+  (9, 3, 2, 7, 1, 2020-01-23, 1, 12, 12),
+  (10, 3, 2, 10, 2, 2020-01-23, 1, 15, 15),
+  (11, 1, 1, 12, 2, 2020-02-02, 1, 39, 39),
+  (12, 3, 2, 14, 2, 2020-02-02, 1, 18, 18),
+  (13, 1, 3, 1, 1, 2020-02-02, 2, 8, 16),
+  (14, 1, 3, 11, 2, 2020-02-13, 1, 50, 50),
+  (15, 1, 3, 15, 3, 2020-02-13, 1, 15, 15),
+  (16, 1, 3, 6, 1, 2020-02-13, 2, 10, 20),
+  (17, 2, 4, 10, 2, 2020-03-01, 1, 15, 15),
+  (18, 2, 4, 8, 2, 2020-03-01, 1, 12, 12),
+  (19, 2, 4, 3, 1, 2020-03-01, 1, 12, 12),
+  (20, 2, 4, 17, 3, 2020-03-01, 1, 39, 39)
+;
+
+CREATE TABLE Branch (
+      Branch_id    INT UNIQUE PRIMARY KEY,
+      Location     VARCHAR (50)
+);
+
+INSERT INTO Branch VALUES 
+  (1, 'Bangkok'),
+  (2, 'Nonthaburi'),
+  (3, 'Pathumthani')
+;
+  
+CREATE TABLE Staffs (
+      Staff_id    INT UNIQUE,
+      Positions_id INT,
+      Firstname   VARCHAR (50),
+      Lastname    VARCHAR (50),
+      Age         INT,
+      Employ_date DATE,
+      Salary      REAL,
+  PRIMARY KEY (Staff_id)
+  CONSTRAINT FK_PositionsStaffs FOREIGN KEY (Staff_id)
+  REFERENCES Positions(Positions_id)
+);
+
+INSERT INTO Staffs VALUES 
+  (1, 1, 'Mary', 'Johnson', 24, 2020-05-15, 8000),
+  (2, 1, 'Andre', 'Carlson', 23, 2020-02-14, 8000),
+  (3, 1, 'Christina', 'Cheng', 24, 2019-01-08, 8300),
+  (4, 1, 'Stephen', 'Strange', 25, 2019-04-15, 8500),
+  (5, 2, 'Patti', 'Labelle', 30, 2010-03-17, 12000),
+  (6, 2, 'Alexandra', 'Quiz', 28, 2012-06-24, 10500),
+  (7, 3, 'Whitney', 'Houston', 29, 2012-07-12, 12000),
+  (8, 5, 'Nicki', 'Minaj', 32, 2010-07-16, 15000)
+;
+
+CREATE TABLE Positions (
+      Positions_id  INT UNIQUE PRIMARY KEY,
+      Name          VARCHAR (50)
+);
+
+INSERT INTO Positions VALUES 
+  (1, 'Waiter/-tress'),
+  (2, 'Cashier'),
+  (3, 'Chef'),
+  (4, 'Account'),
+  (5, 'Manager')
+;
+
+CREATE TABLE Menu (
+      Menu_id        INT UNIQUE,
+      Categories_id  INT,
+      Name           VARCHAR (100),
+      Unit           VARCHAR (20),
+      Price          REAL,
+      Cost           REAL,
+  PRIMARY KEY (Menu_id),
+  CONSTRAINT FK_CategoriesMenu FOREIGN KEY (Categories_id)
+  REFERENCES Categories(Categories_id)
+);
+
+INSERT INTO Menu VALUES 
+  (1, 1, 'Hot Coffee', 'Cup', 8, 3),
+  (2, 1, 'Iced Coffee', 'Glass', 10, 3.5),
+  (3, 1, 'Orange Juice', 'Glass', 12, 4),
+  (4, 1, 'Hot Chocolate', 'Cup', 9, 4),
+  (5, 1, 'Sparkling Water', 'Bottle', 12, 4),
+  (6, 1, 'Mineral Water', 'Bottle', 10, 3),
+  (7, 1, 'Red Wine', 'Glass', 12, 3),
+  (8, 2, 'Omelette', 'Dish', 12, 3),
+  (9, 2, 'Eggs Benedict', 'Dish', 29, 6.5),
+  (10, 2, 'Fried Rice', 'Dish', 15, 3.5),
+  (11, 2, 'Beef Tenderloin Steak', 'Dish', 50, 12.5),
+  (12, 2, 'Salmon Steak' , 'Dish', 39, 10),
+  (13, 2, 'Beef Wellington', 'Dish', 79, 12.5),
+  (14, 2, 'Clam Soup', 'Cup', 18, 3),
+  (15, 3, 'Creme brulee', 'Cup', 15, 2),
+  (16, 3, 'Almond Croissant', 'Piece', 8, 2),
+  (17, 3, 'Chocolate Fondue', 'Set', 39, 9)
+;
+
+CREATE TABLE Categories (
+      Categories_id  INT UNIQUE PRIMARY KEY,
+      Name           VARCHAR (20)
+); 
+INSERT INTO Categories VALUES 
+  (1, 'Drinks'),
+  (2, 'Main Course'),
+  (3, 'Dessert')
+;
+
+.mode markdown 
+.header on
+
+/*SELECT * FROM Orders;
+SELECT * FROM Menu;*/
+
+SELECT 
+  staff_name,
+  Menu_name,
+  SUM (Total_price) AS menu_net
+FROM (
+  SELECT
+    ord.Menu_id,
+    sta.Firstname AS staff_name,
+    me.Name AS Menu_name,
+    ord.Total_Price
+  FROM Orders AS ord 
+  JOIN Menu AS me ON Me.Menu_id = ord.Menu_id
+  JOIN Staffs AS sta ON sta.Staff_id = ord.Staff_id
+)
+GROUP BY 1 ,2
+;
+
+WITH Staff_sale AS (
+  SELECT
+    ord.Menu_id,
+    sta.Firstname AS staff_name,
+    me.Name AS Menu_name,
+    ord.Total_Price
+  FROM Orders AS ord 
+  JOIN Menu AS me ON Me.Menu_id = ord.Menu_id
+  JOIN Staffs AS sta ON sta.Staff_id = ord.Staff_id
+)
+
+SELECT 
+  staff_name,
+  SUM (Total_price) AS menu_net,
+  CASE 
+    WHEN SUM (Total_price) > 100 THEN 'Good Performance'
+    WHEN SUM (Total_price) BETWEEN 50 AND 100 THEN 'Normal Performance'
+    ELSE 'Poor Performance'
+  END AS Staff_performance
+FROM Staff_sale
+GROUP BY 1
+;
