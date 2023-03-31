@@ -6,7 +6,7 @@ We learn 10 sprints during 4 month program
 
 - Spreadsheets
 - SQL Database
-[https://replit.com/@RungchatAmnuay/SQLhomeworkbatch6#main.sql](https://replit.com/@RungchatAmnuay/SQLhomeworkbatch6#main.sql)
+[Click to View](https://replit.com/@RungchatAmnuay/SQLhomeworkbatch6#main.sql)
 - R Programming
 - Data Transformation
 - Data Visualization
